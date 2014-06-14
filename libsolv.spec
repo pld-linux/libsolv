@@ -2,41 +2,44 @@
 # Conditional build:
 %bcond_without	static_libs	# static libraries
 %bcond_without	python3		# Python 3.x bindings
-#
+%bcond_without	ruby		# Ruby bindings
+
+%define		gitrev	f78f5de
 %include	/usr/lib/rpm/macros.perl
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-%define	snap	20131123
-Version:	0.4.0
-Release:	0.%{snap}.1
+Version:	0.6.1
+Release:	1
 License:	BSD
 Group:		Libraries
 # git clone https://github.com/openSUSE/libsolv.git
-Source0:	libsolv.tar.xz
-# Source0-md5:	af4c85d44954f8f5e2375ecad744d1f2
+Source0:	http://pkgs.fedoraproject.org/repo/pkgs/libsolv/%{name}-%{gitrev}.tar.xz/79166e5d759b1c879bca4d167c02fc62/libsolv-%{gitrev}.tar.xz
+# Source0-md5:	79166e5d759b1c879bca4d167c02fc62
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake >= 2.4
 BuildRequires:	db-devel
 BuildRequires:	expat-devel
-BuildRequires:	rpm-devel >= 5
-BuildRequires:	swig-perl
-BuildRequires:	swig-python
-BuildRequires:	swig-ruby
 BuildRequires:	perl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2
 %{?with_python3:BuildRequires:	python3-devel >= 3}
+BuildRequires:	rpm-devel >= 5
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpm-rubyprov
 BuildRequires:	rpmbuild(macros) >= 1.219
-BuildRequires:	ruby-devel
+BuildRequires:	swig-perl
+BuildRequires:	swig-python
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
+%if %{with ruby}
+BuildRequires:	rpm-rubyprov
+BuildRequires:	ruby-devel
+BuildRequires:	swig-ruby
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,8 +57,8 @@ Wolnodostępna biblioteka do rozwiązywania zależności pakietów przy
 użyciu algorytmu spełnialności. Biblioteka jest podzielona na dwa
 główne, niezależne bloki:
 
-- wykorzystanie podejścia słownikowego do przechowywania i
-  odtwarzania informacji o pakietach i zależnościach,
+- wykorzystanie podejścia słownikowego do przechowywania i odtwarzania
+  informacji o pakietach i zależnościach,
 
 - wykorzystanie spełnialności - dobrze znanego i zbadanego tematu do
   rozwiązywania zależności pakietów.
@@ -151,7 +154,7 @@ Ruby bindings for the libsolv libraries.
 Wiązania języka Ruby do bibliotek libsolv.
 
 %prep
-%setup -q -n libsolv
+%setup -q -n %{name}
 
 %build
 install -d build %{?with_python3:build-py3}
@@ -166,7 +169,7 @@ cd build
 	-DENABLE_RPMDB=ON \
 	-DENABLE_RPMDB_BYRPMHEADER=ON \
 	-DENABLE_RPMMD=ON \
-	-DENABLE_RUBY=ON \
+	%{?with_ruby:-DENABLE_RUBY=ON} \
 	%{?with_static_libs:-DENABLE_STATIC=ON} \
 	-DPythonLibs_FIND_VERSION=2 \
 	-DRPM5=ON \
@@ -235,6 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files tools
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/appdata2solv
 %attr(755,root,root) %{_bindir}/deltainfoxml2solv
 %attr(755,root,root) %{_bindir}/dumpsolv
 %attr(755,root,root) %{_bindir}/installcheck
@@ -268,7 +272,9 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/solv.py
 %endif
 
+%if %{with ruby}
 %files -n ruby-solv
 %defattr(644,root,root,755)
 %doc examples/rbsolv
 %attr(755,root,root) %{ruby_vendorarchdir}/solv.so
+%endif
