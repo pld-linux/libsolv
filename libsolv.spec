@@ -10,12 +10,13 @@ Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
 Version:	0.6.1
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 # git clone https://github.com/openSUSE/libsolv.git
 Source0:	http://pkgs.fedoraproject.org/repo/pkgs/libsolv/%{name}-%{gitrev}.tar.xz/79166e5d759b1c879bca4d167c02fc62/libsolv-%{gitrev}.tar.xz
 # Source0-md5:	79166e5d759b1c879bca4d167c02fc62
+Patch0:		ruby.patch
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake >= 2.4
@@ -155,6 +156,7 @@ Wiązania języka Ruby do bibliotek libsolv.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1
 
 %build
 install -d build %{?with_python3:build-py3}
