@@ -10,7 +10,7 @@ Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
 Version:	0.6.1
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries
 # git clone https://github.com/openSUSE/libsolv.git
