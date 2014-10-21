@@ -157,6 +157,9 @@ Wiązania języka Ruby do bibliotek libsolv.
 %setup -q
 %patch0 -p1
 
+# use system one
+rm cmake/modules/FindRuby.cmake
+
 %build
 install -d build %{?with_python3:build-py3}
 cd build
