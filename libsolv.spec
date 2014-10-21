@@ -9,13 +9,12 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.1
-Release:	4
+Version:	0.6.6
+Release:	1
 License:	BSD
 Group:		Libraries
-# git clone https://github.com/openSUSE/libsolv.git
-Source0:	http://pkgs.fedoraproject.org/repo/pkgs/libsolv/%{name}-%{gitrev}.tar.xz/79166e5d759b1c879bca4d167c02fc62/libsolv-%{gitrev}.tar.xz
-# Source0-md5:	79166e5d759b1c879bca4d167c02fc62
+Source0:	https://github.com/openSUSE/libsolv/archive/%{version}.tar.gz?/%{name}-%{version}.tgz
+# Source0-md5:	17e2fada982e6629b679785b4b6ff3b3
 Patch0:		ruby.patch
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
@@ -155,7 +154,7 @@ Ruby bindings for the libsolv libraries.
 Wiązania języka Ruby do bibliotek libsolv.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 %patch0 -p1
 
 %build
@@ -253,6 +252,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/solv
 %attr(755,root,root) %{_bindir}/testsolv
 %attr(755,root,root) %{_bindir}/updateinfoxml2solv
+%{_mandir}/man1/appdata2solv.1*
+%{_mandir}/man1/deltainfoxml2solv.1*
+%{_mandir}/man1/dumpsolv.1*
+%{_mandir}/man1/installcheck.1*
+%{_mandir}/man1/mergesolv.1*
+%{_mandir}/man1/repomdxml2solv.1*
+%{_mandir}/man1/rpmdb2solv.1*
+%{_mandir}/man1/rpmmd2solv.1*
+%{_mandir}/man1/rpms2solv.1*
+%{_mandir}/man1/testsolv.1*
+%{_mandir}/man1/updateinfoxml2solv.1*
 
 %files -n perl-solv
 %defattr(644,root,root,755)
