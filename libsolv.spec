@@ -16,6 +16,7 @@ Group:		Libraries
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}.tar.gz?/%{name}-%{version}.tgz
 # Source0-md5:	17e2fada982e6629b679785b4b6ff3b3
 Patch0:		ruby.patch
+Patch1:		%{name}-python.patch
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake >= 2.4
@@ -156,17 +157,18 @@ Wiązania języka Ruby do bibliotek libsolv.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 # use system one
-rm cmake/modules/FindRuby.cmake
+%{__rm} cmake/modules/FindRuby.cmake
 
 %build
 install -d build %{?with_python3:build-py3}
 cd build
 %cmake .. \
 	-DENABLE_APPDATA=ON \
-	-DENABLE_BZIP2_COMPRESSON=ON \
-	-DENABLE_LZMA_COMPRESSON=ON \
+	-DENABLE_BZIP2_COMPRESSION=ON \
+	-DENABLE_LZMA_COMPRESSION=ON \
 	-DENABLE_PERL=ON \
 	-DENABLE_PUBKEY=ON \
 	-DENABLE_PYTHON=ON \
@@ -176,6 +178,7 @@ cd build
 	%{?with_ruby:-DENABLE_RUBY=ON} \
 	%{?with_static_libs:-DENABLE_STATIC=ON} \
 	-DPythonLibs_FIND_VERSION=2 \
+	-DPythonLibs_FIND_VERSION_MAJOR=2 \
 	-DRPM5=ON \
 	-DUSE_VENDORDIRS=ON
 
@@ -184,14 +187,15 @@ cd build
 cd ../build-py3
 %cmake .. \
 	-DENABLE_APPDATA=ON \
-	-DENABLE_BZIP2_COMPRESSON=ON \
-	-DENABLE_LZMA_COMPRESSON=ON \
+	-DENABLE_BZIP2_COMPRESSION=ON \
+	-DENABLE_LZMA_COMPRESSION=ON \
 	-DENABLE_PUBKEY=ON \
 	-DENABLE_PYTHON=ON \
 	-DENABLE_RPMDB=ON \
 	-DENABLE_RPMMD=ON \
 	-DENABLE_RPMDB_BYRPMHEADER=ON \
 	-DPythonLibs_FIND_VERSION=3 \
+	-DPythonLibs_FIND_VERSION_MAJOR=3 \
 	-DRPM5=ON
 
 %{__make}
