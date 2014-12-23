@@ -4,17 +4,16 @@
 %bcond_without	python3		# Python 3.x bindings
 %bcond_without	ruby		# Ruby bindings
 
-%define		gitrev	f78f5de
 %include	/usr/lib/rpm/macros.perl
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.6
+Version:	0.6.7
 Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	https://github.com/openSUSE/libsolv/archive/%{version}.tar.gz?/%{name}-%{version}.tgz
-# Source0-md5:	17e2fada982e6629b679785b4b6ff3b3
+Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	9119944c54d400e731a43e7dea3e77d1
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 URL:		https://github.com/openSUSE/libsolv
@@ -224,7 +223,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS CREDITS LICENSE.BSD README
+%doc BUGS CREDITS LICENSE.BSD NEWS README
 %attr(755,root,root) %{_libdir}/libsolv.so.0
 %attr(755,root,root) %{_libdir}/libsolvext.so.0
 
@@ -256,7 +255,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/rpmdb2solv
 %attr(755,root,root) %{_bindir}/rpmmd2solv
 %attr(755,root,root) %{_bindir}/rpms2solv
-%attr(755,root,root) %{_bindir}/solv
 %attr(755,root,root) %{_bindir}/testsolv
 %attr(755,root,root) %{_bindir}/updateinfoxml2solv
 %{_mandir}/man1/appdata2solv.1*
