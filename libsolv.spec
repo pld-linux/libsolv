@@ -8,12 +8,12 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.7
+Version:	0.6.8
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	9119944c54d400e731a43e7dea3e77d1
+# Source0-md5:	1c6f16b9019cd4904dfe9538d80a0d0d
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 URL:		https://github.com/openSUSE/libsolv
@@ -167,6 +167,7 @@ cd build
 %cmake .. \
 	-DENABLE_APPDATA=ON \
 	-DENABLE_BZIP2_COMPRESSION=ON \
+	-DENABLE_HELIXREPO=ON \
 	-DENABLE_LZMA_COMPRESSION=ON \
 	-DENABLE_PERL=ON \
 	-DENABLE_PUBKEY=ON \
@@ -248,6 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/appdata2solv
 %attr(755,root,root) %{_bindir}/deltainfoxml2solv
 %attr(755,root,root) %{_bindir}/dumpsolv
+%attr(755,root,root) %{_bindir}/helix2solv
 %attr(755,root,root) %{_bindir}/installcheck
 %attr(755,root,root) %{_bindir}/mergesolv
 %attr(755,root,root) %{_bindir}/repo2solv.sh
@@ -260,6 +262,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/appdata2solv.1*
 %{_mandir}/man1/deltainfoxml2solv.1*
 %{_mandir}/man1/dumpsolv.1*
+%{_mandir}/man1/helix2solv.1*
 %{_mandir}/man1/installcheck.1*
 %{_mandir}/man1/mergesolv.1*
 %{_mandir}/man1/repomdxml2solv.1*
