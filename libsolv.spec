@@ -3,17 +3,18 @@
 %bcond_without	static_libs	# static libraries
 %bcond_without	python3		# Python 3.x bindings
 %bcond_without	ruby		# Ruby bindings
+%bcond_without	tcl		# Tcl bindings
 
 %include	/usr/lib/rpm/macros.perl
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.8
-Release:	7
+Version:	0.6.19
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	1c6f16b9019cd4904dfe9538d80a0d0d
+# Source0-md5:	b1fe10e51190a138767aedf010525032
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 URL:		https://github.com/openSUSE/libsolv
@@ -31,7 +32,9 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	swig-perl
 BuildRequires:	swig-python
+%{?with_tcl:BuildRequires:	swig-tcl}
 BuildRequires:	tar >= 1:1.22
+%{?with_tcl:BuildRequires:	tcl-devel}
 BuildRequires:	xz
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
@@ -153,6 +156,19 @@ Ruby bindings for the libsolv libraries.
 %description -n ruby-solv -l pl.UTF-8
 Wiązania języka Ruby do bibliotek libsolv.
 
+%package -n tcl-solv
+Summary:	Tcl bindings for the libsolv libraries
+Summary(pl.UTF-8):	Wiązania języka Tcl do bibliotek libsolv
+Group:		Development/Languages
+Requires:	%{name} = %{version}-%{release}
+Requires:	tcl
+
+%description -n tcl-solv
+Tcl bindings for the libsolv libraries.
+
+%description -n tcl-solv -l pl.UTF-8
+Wiązania języka Tcl do bibliotek libsolv.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -177,6 +193,7 @@ cd build
 	-DENABLE_RPMMD=ON \
 	%{?with_ruby:-DENABLE_RUBY=ON} \
 	%{?with_static_libs:-DENABLE_STATIC=ON} \
+	%{?with_tcl:-DENABLE_TCL=ON} \
 	-DPythonLibs_FIND_VERSION=2 \
 	-DPythonLibs_FIND_VERSION_MAJOR=2 \
 	-DRPM5=ON \
@@ -230,10 +247,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc examples/solv.c
 %attr(755,root,root) %{_libdir}/libsolv.so
 %attr(755,root,root) %{_libdir}/libsolvext.so
 %{_includedir}/solv
+%{_pkgconfigdir}/libsolv.pc
 %{_datadir}/cmake/Modules/FindLibSolv.cmake
 %{_mandir}/man3/libsolv*.3*
 
@@ -297,4 +314,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc examples/rbsolv
 %attr(755,root,root) %{ruby_vendorarchdir}/solv.so
+%endif
+
+%if %{with tcl}
+%files -n tcl-solv
+%defattr(644,root,root,755)
+%doc examples/tclsolv
+%attr(755,root,root) %{_prefix}/lib/tcl8/8.*/solv-%{version}.so
+%{_prefix}/lib/tcl8/8.*/solv-%{version}.tm
 %endif
