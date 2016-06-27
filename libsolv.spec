@@ -9,12 +9,12 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.19
-Release:	2
+Version:	0.6.22
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b1fe10e51190a138767aedf010525032
+# Source0-md5:	33e22fc89aa41e67dae917a8a587ae73
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 URL:		https://github.com/openSUSE/libsolv
