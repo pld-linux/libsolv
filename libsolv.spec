@@ -9,16 +9,15 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.27
+Version:	0.6.28
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	04803110f87fe3840e611f902f18d8dc
+# Source0-md5:	663e6d0b618ab88ce4c1e30b0e2cdfa1
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
-Patch2:		perl.patch
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake >= 2.4
@@ -175,7 +174,6 @@ Wiązania języka Tcl do bibliotek libsolv.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # use system one
 %{__rm} cmake/modules/FindRuby.cmake
@@ -254,6 +252,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libsolvext.so
 %{_includedir}/solv
 %{_pkgconfigdir}/libsolv.pc
+%{_pkgconfigdir}/libsolvext.pc
 %{_datadir}/cmake/Modules/FindLibSolv.cmake
 %{_mandir}/man3/libsolv*.3*
 
