@@ -1,0 +1,39 @@
+(partial, not finished: rpmdbIndex* and headerImport APIs are used)
+--- libsolv-0.6.34/ext/repo_rpmdb_librpm.h.orig	2018-03-23 12:04:14.000000000 +0100
++++ libsolv-0.6.34/ext/repo_rpmdb_librpm.h	2018-05-10 20:28:01.213443653 +0200
+@@ -15,6 +15,12 @@
+ #include <rpm/rpmts.h>
+ #include <rpm/rpmmacro.h>
+ 
++#ifdef RPM5
++#define _RPMVSF_NOSIGNATURES (RPMVSF_NODSAHEADER | RPMVSF_NORSAHEADER | RPMVSF_NODSA | RPMVSF_NORSA)
++#define _RPMVSF_NODIGESTS (RPMVSF_NOSHA1HEADER | RPMVSF_NOMD5HEADER | RPMVSF_NOSHA1 | RPMVSF_NOMD5)
++#define _RPMVSF_NOHEADER (RPMVSF_NOSHA1HEADER | RPMVSF_NOMD5HEADER | RPMVSF_NODSAHEADER | RPMVSF_NORSAHEADER)
++#endif
++
+ struct rpmdbstate {
+   Pool *pool;
+   char *rootdir;
+--- libsolv-0.6.34/ext/repo_rpmdb.c.orig	2018-03-23 12:04:14.000000000 +0100
++++ libsolv-0.6.34/ext/repo_rpmdb.c	2018-05-10 19:30:12.563483259 +0200
+@@ -30,6 +30,8 @@
+ #include <rpm/rpmpgp.h>
+ #ifndef RPM5
+ #include <rpm/header.h>
++#else
++#include <rpm/rpm46compat.h>
+ #endif
+ #include <rpm/rpmdb.h>
+ 
+@@ -457,7 +459,11 @@
+ static int
+ headissourceheuristic(RpmHead *h)
+ {
++#ifdef RPM5
++  return !headerIsEntry(h, RPMTAG_SOURCERPM);
++#else
+   return headerIsSource(h);
++#endif
+ }
+ 
+ static inline void

@@ -9,15 +9,16 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.30
+Version:	0.6.34
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	76fad6d855817f6fbe70fdec384885ae
+# Source0-md5:	b61f8268a60086ae6fbf7a3454d669cb
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
+Patch2:		%{name}-rpm5.patch
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
 BuildRequires:	cmake >= 2.4
@@ -174,47 +175,47 @@ Wiązania języka Tcl do bibliotek libsolv.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # use system one
 %{__rm} cmake/modules/FindRuby.cmake
 
 %build
+# TODO: -DENABLE_RPMDB_LIBRPM=ON -DENABLE_RPMPKG_LIBRPM=ON (rpm5 not supported)
+
+%define common_opts \\\
+	-DENABLE_APPDATA=ON \\\
+	-DENABLE_BZIP2_COMPRESSION=ON \\\
+	-DENABLE_HELIXREPO=ON \\\
+	-DENABLE_LZMA_COMPRESSION=ON \\\
+	-DENABLE_PUBKEY=ON \\\
+	-DENABLE_RPMDB=ON \\\
+	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
+	-DENABLE_RPMMD=ON \\\
+	%{?with_static_libs:-DENABLE_STATIC=ON} \\\
+	-DRPM5=ON \\\
+	%{nil}
+
 install -d build %{?with_python3:build-py3}
 cd build
 %cmake .. \
-	-DENABLE_APPDATA=ON \
-	-DENABLE_BZIP2_COMPRESSION=ON \
-	-DENABLE_HELIXREPO=ON \
-	-DENABLE_LZMA_COMPRESSION=ON \
+	%{common_opts} \
 	-DENABLE_PERL=ON \
-	-DENABLE_PUBKEY=ON \
 	-DENABLE_PYTHON=ON \
-	-DENABLE_RPMDB=ON \
-	-DENABLE_RPMDB_BYRPMHEADER=ON \
-	-DENABLE_RPMMD=ON \
 	%{?with_ruby:-DENABLE_RUBY=ON} \
-	%{?with_static_libs:-DENABLE_STATIC=ON} \
 	%{?with_tcl:-DENABLE_TCL=ON} \
 	-DPythonLibs_FIND_VERSION=2 \
 	-DPythonLibs_FIND_VERSION_MAJOR=2 \
-	-DRPM5=ON \
 	-DUSE_VENDORDIRS=ON
 
 %{__make}
 %if %{with python3}
 cd ../build-py3
 %cmake .. \
-	-DENABLE_APPDATA=ON \
-	-DENABLE_BZIP2_COMPRESSION=ON \
-	-DENABLE_LZMA_COMPRESSION=ON \
-	-DENABLE_PUBKEY=ON \
+	%{common_opts} \
 	-DENABLE_PYTHON=ON \
-	-DENABLE_RPMDB=ON \
-	-DENABLE_RPMMD=ON \
-	-DENABLE_RPMDB_BYRPMHEADER=ON \
 	-DPythonLibs_FIND_VERSION=3 \
-	-DPythonLibs_FIND_VERSION_MAJOR=3 \
-	-DRPM5=ON
+	-DPythonLibs_FIND_VERSION_MAJOR=3
 
 %{__make}
 %endif
