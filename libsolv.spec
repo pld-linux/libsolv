@@ -10,7 +10,7 @@ Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
 Version:	0.6.34
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
@@ -186,6 +186,7 @@ Wiązania języka Tcl do bibliotek libsolv.
 %define common_opts \\\
 	-DENABLE_APPDATA=ON \\\
 	-DENABLE_BZIP2_COMPRESSION=ON \\\
+	-DENABLE_COMPLEX_DEPS=ON \\\
 	-DENABLE_HELIXREPO=ON \\\
 	-DENABLE_LZMA_COMPRESSION=ON \\\
 	-DENABLE_PUBKEY=ON \\\
