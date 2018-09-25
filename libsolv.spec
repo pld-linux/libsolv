@@ -10,7 +10,7 @@ Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
 Version:	0.6.34
-Release:	7
+Release:	8
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
@@ -46,6 +46,8 @@ BuildRequires:	ruby-devel
 BuildRequires:	swig-ruby
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		specflags	-D_GNU_SOURCE=1
 
 %description
 A free package dependency solver using a satisfiability algorithm. The
