@@ -25,15 +25,3 @@
  #endif
  #include <rpm/rpmdb.h>
  
-@@ -457,7 +459,11 @@
- static int
- headissourceheuristic(RpmHead *h)
- {
-+#ifdef RPM5
-+  return !headerIsEntry(h, RPMTAG_SOURCERPM);
-+#else
-   return headerIsSource(h);
-+#endif
- }
- 
- static inline void

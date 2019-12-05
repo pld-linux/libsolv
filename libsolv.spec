@@ -9,13 +9,13 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.6.34
-Release:	9
+Version:	0.7.9
+Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b61f8268a60086ae6fbf7a3454d669cb
+# Source0-md5:	48c9fe6342beca1eb032aca20c69ecc6
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 Patch2:		%{name}-rpm5.patch
@@ -246,9 +246,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc BUGS CREDITS LICENSE.BSD NEWS README
-%attr(755,root,root) %{_libdir}/libsolv.so.0
-%attr(755,root,root) %{_libdir}/libsolvext.so.0
+%doc CREDITS LICENSE.BSD NEWS README
+%attr(755,root,root) %{_libdir}/libsolv.so.1
+%attr(755,root,root) %{_libdir}/libsolvext.so.1
 
 %files devel
 %defattr(644,root,root,755)
@@ -275,7 +275,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/helix2solv
 %attr(755,root,root) %{_bindir}/installcheck
 %attr(755,root,root) %{_bindir}/mergesolv
-%attr(755,root,root) %{_bindir}/repo2solv.sh
+%attr(755,root,root) %{_bindir}/repo2solv
 %attr(755,root,root) %{_bindir}/repomdxml2solv
 %attr(755,root,root) %{_bindir}/rpmdb2solv
 %attr(755,root,root) %{_bindir}/rpmmd2solv
@@ -288,10 +288,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/helix2solv.1*
 %{_mandir}/man1/installcheck.1*
 %{_mandir}/man1/mergesolv.1*
+%{_mandir}/man1/repo2solv.1*
 %{_mandir}/man1/repomdxml2solv.1*
 %{_mandir}/man1/rpmdb2solv.1*
 %{_mandir}/man1/rpmmd2solv.1*
 %{_mandir}/man1/rpms2solv.1*
+%{_mandir}/man1/solv.1*
 %{_mandir}/man1/testsolv.1*
 %{_mandir}/man1/updateinfoxml2solv.1*
 
