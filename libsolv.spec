@@ -21,7 +21,7 @@ Patch1:		%{name}-python.patch
 Patch2:		%{name}-rpm5.patch
 URL:		https://github.com/openSUSE/libsolv
 BuildRequires:	bzip2-devel
-BuildRequires:	cmake >= 2.4
+BuildRequires:	cmake >= 2.8.5
 BuildRequires:	db-devel
 BuildRequires:	expat-devel
 BuildRequires:	perl-devel
@@ -39,7 +39,9 @@ BuildRequires:	tar >= 1:1.22
 %{?with_tcl:BuildRequires:	tcl-devel}
 BuildRequires:	xz
 BuildRequires:	xz-devel
+BuildRequires:	zchunk-devel
 BuildRequires:	zlib-devel
+BuildRequires:	zstd-devel
 %if %{with ruby}
 BuildRequires:	rpm-rubyprov
 BuildRequires:	ruby-devel
@@ -195,8 +197,12 @@ Wiązania języka Tcl do bibliotek libsolv.
 	-DENABLE_RPMDB=ON \\\
 	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
 	-DENABLE_RPMMD=ON \\\
+	-DENABLE_RPMPKG=ON \\\
 	%{?with_static_libs:-DENABLE_STATIC=ON} \\\
+	-DENABLE_ZCHUNK_COMPRESSION=ON \\\
+	-DENABLE_ZSTD_COMPRESSION=ON \\\
 	-DRPM5=ON \\\
+	-DWITH_SYSTEM_ZCHUNK=ON \\\
 	%{nil}
 
 install -d build %{?with_python3:build-py3}
