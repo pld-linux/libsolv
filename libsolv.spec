@@ -5,7 +5,6 @@
 %bcond_without	ruby		# Ruby bindings
 %bcond_without	tcl		# Tcl bindings
 
-%include	/usr/lib/rpm/macros.perl
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
