@@ -8,13 +8,13 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.7.9
-Release:	2
+Version:	0.7.11
+Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	48c9fe6342beca1eb032aca20c69ecc6
+# Source0-md5:	bf5293b2f319d6225d0deb963ee660a4
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 Patch2:		%{name}-rpm5.patch
@@ -184,7 +184,7 @@ Wiązania języka Tcl do bibliotek libsolv.
 %{__rm} cmake/modules/FindRuby.cmake
 
 %build
-# TODO: -DENABLE_RPMDB_LIBRPM=ON -DENABLE_RPMPKG_LIBRPM=ON (rpm5 not supported)
+# TODO: -DENABLE_RPMDB_LIBRPM=ON (instead of -DENABLE_RPMDB_BDB), -DENABLE_RPMPKG_LIBRPM=ON after switch to rpm.org (rpm5 is not supported)
 
 %define common_opts \\\
 	-DENABLE_APPDATA=ON \\\
@@ -194,6 +194,7 @@ Wiązania języka Tcl do bibliotek libsolv.
 	-DENABLE_LZMA_COMPRESSION=ON \\\
 	-DENABLE_PUBKEY=ON \\\
 	-DENABLE_RPMDB=ON \\\
+	-DENABLE_RPMDB_BDB=ON \\\
 	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
 	-DENABLE_RPMMD=ON \\\
 	-DENABLE_RPMPKG=ON \\\
