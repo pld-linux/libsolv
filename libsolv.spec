@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	static_libs	# static libraries
 %bcond_without	python3		# Python 3.x bindings
+%bcond_with	rpm5		# build with rpm5
 %bcond_without	ruby		# Ruby bindings
 %bcond_without	tcl		# Tcl bindings
 
@@ -9,7 +10,7 @@ Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
 Version:	0.7.16
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
@@ -27,7 +28,7 @@ BuildRequires:	perl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2
 %{?with_python3:BuildRequires:	python3-devel >= 3}
-BuildRequires:	rpm-devel >= 5
+BuildRequires:	rpm-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -76,7 +77,7 @@ Summary:	Header files for libsolv libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek libsolv
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	rpm-devel >= 5
+Requires:	rpm-devel
 
 %description devel
 Development files for libsolv.
@@ -178,13 +179,12 @@ Wiązania języka Tcl do bibliotek libsolv.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%{?with_rpm5:%patch2 -p1}
 
 # use system one
 %{__rm} cmake/modules/FindRuby.cmake
 
 %build
-# TODO: -DENABLE_RPMDB_LIBRPM=ON (instead of -DENABLE_RPMDB_BDB), -DENABLE_RPMPKG_LIBRPM=ON after switch to rpm.org (rpm5 is not supported)
 
 %define common_opts \\\
 	-DENABLE_APPDATA=ON \\\
@@ -194,7 +194,12 @@ Wiązania języka Tcl do bibliotek libsolv.
 	-DENABLE_LZMA_COMPRESSION=ON \\\
 	-DENABLE_PUBKEY=ON \\\
 	-DENABLE_RPMDB=ON \\\
+%if %{with rpm5}
 	-DENABLE_RPMDB_BDB=ON \\\
+%else
+	-DENABLE_RPMDB_LIBRPM=ON \\\
+	-DENABLE_RPMPKG_LIBRPM=ON \\\
+%endif
 	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
 	-DENABLE_RPMMD=ON \\\
 	-DENABLE_RPMPKG=ON \\\
