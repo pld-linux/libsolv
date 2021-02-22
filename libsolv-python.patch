@@ -1,8 +1,8 @@
 --- libsolv-0.6.19/bindings/python/CMakeLists.txt.orig	2016-02-19 22:55:50.640253346 +0100
 +++ libsolv-0.6.19/bindings/python/CMakeLists.txt	2016-02-19 23:16:50.826867127 +0100
 @@ -2,7 +2,7 @@
- FIND_PACKAGE (PythonLibs REQUIRED)
- FIND_PACKAGE (PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
+ ENDIF()
+ FIND_PACKAGE (PythonInterp ${python_version} REQUIRED)
  
 -EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib(True))" OUTPUT_VARIABLE PYTHON_INSTALL_DIR)
 +EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib(plat_specific=True, prefix='/usr'))" OUTPUT_VARIABLE PYTHON_INSTALL_DIR)

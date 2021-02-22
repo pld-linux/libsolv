@@ -26,5 +26,5 @@ diff -up libsolv/bindings/ruby/CMakeLists.txt.rubyinclude libsolv/bindings/ruby/
 -INCLUDE_DIRECTORIES (${RUBY_INCLUDE_PATH})
 +INCLUDE_DIRECTORIES (${RUBY_INCLUDE_DIRS})
  
- ADD_LIBRARY (bindings_ruby SHARED solv_ruby.c)
+ ADD_LIBRARY (bindings_ruby MODULE solv_ruby.c)
  SET_TARGET_PROPERTIES (bindings_ruby PROPERTIES PREFIX "" OUTPUT_NAME "solv")

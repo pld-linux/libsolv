@@ -9,13 +9,13 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.7.16
-Release:	2
+Version:	0.7.17
+Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/releases
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	65a205694b45f9c7c28e25a9ccac8726
+# Source0-md5:	0c0394275be0c5eff1e76abacfb28705
 Patch0:		ruby.patch
 Patch1:		%{name}-python.patch
 Patch2:		%{name}-rpm5.patch
@@ -185,7 +185,6 @@ Wiązania języka Tcl do bibliotek libsolv.
 %{__rm} cmake/modules/FindRuby.cmake
 
 %build
-
 %define common_opts \\\
 	-DENABLE_APPDATA=ON \\\
 	-DENABLE_BZIP2_COMPRESSION=ON \\\
@@ -194,16 +193,16 @@ Wiązania języka Tcl do bibliotek libsolv.
 	-DENABLE_LZMA_COMPRESSION=ON \\\
 	-DENABLE_PUBKEY=ON \\\
 	-DENABLE_RPMDB=ON \\\
+	%{?with_rpm5:-DRPM5=ON} \\\
 	%{?with_rpm5:-DENABLE_RPMDB_BDB=ON} \\\
+	%{?with_rpm5:-DENABLE_RPMPKG=ON} \\\
 	%{!?with_rpm5:-DENABLE_RPMDB_LIBRPM=ON} \\\
 	%{!?with_rpm5:-DENABLE_RPMPKG_LIBRPM=ON} \\\
 	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
 	-DENABLE_RPMMD=ON \\\
-	-DENABLE_RPMPKG=ON \\\
 	%{?with_static_libs:-DENABLE_STATIC=ON} \\\
 	-DENABLE_ZCHUNK_COMPRESSION=ON \\\
 	-DENABLE_ZSTD_COMPRESSION=ON \\\
-	-DRPM5=ON \\\
 	-DWITH_SYSTEM_ZCHUNK=ON \\\
 	%{nil}
 
