@@ -194,12 +194,9 @@ Wiązania języka Tcl do bibliotek libsolv.
 	-DENABLE_LZMA_COMPRESSION=ON \\\
 	-DENABLE_PUBKEY=ON \\\
 	-DENABLE_RPMDB=ON \\\
-%if %{with rpm5}
-	-DENABLE_RPMDB_BDB=ON \\\
-%else
-	-DENABLE_RPMDB_LIBRPM=ON \\\
-	-DENABLE_RPMPKG_LIBRPM=ON \\\
-%endif
+	%{?with_rpm5:-DENABLE_RPMDB_BDB=ON} \\\
+	%{!?with_rpm5:-DENABLE_RPMDB_LIBRPM=ON} \\\
+	%{!?with_rpm5:-DENABLE_RPMPKG_LIBRPM=ON} \\\
 	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
 	-DENABLE_RPMMD=ON \\\
 	-DENABLE_RPMPKG=ON \\\
