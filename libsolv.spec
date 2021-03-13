@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	static_libs	# static libraries
 %bcond_without	python3		# Python 3.x bindings
-%bcond_with	rpm5		# build with rpm5
+%bcond_with	rpm5		# rpm5 fork instead of rpm.org
 %bcond_without	ruby		# Ruby bindings
 %bcond_without	tcl		# Tcl bindings
 
@@ -31,7 +31,7 @@ BuildRequires:	python-devel >= 2
 BuildRequires:	rpm-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	swig-perl
 BuildRequires:	swig-python
 %{?with_tcl:BuildRequires:	swig-tcl}
