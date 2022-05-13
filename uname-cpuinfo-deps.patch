@@ -1,0 +1,24 @@
+--- libsolv-0.7.22/src/order.c.orig	2022-03-21 10:19:54.000000000 +0100
++++ libsolv-0.7.22/src/order.c	2022-05-13 11:47:48.372551371 +0200
+@@ -1387,6 +1387,10 @@
+ 	    continue;
+ 	  if (!strncmp(pool_id2str(pool, req), "rpmlib(", 7))
+ 	    continue;
++	  if (!strncmp(pool_id2str(pool, req), "uname(", 6))
++	    continue;
++	  if (!strncmp(pool_id2str(pool, req), "cpuinfo(", 8))
++	    continue;
+ 	  good = 0;
+ 	  /* first check kept packages, then freshly installed, then not yet uninstalled */
+ 	  FOR_PROVIDES(p, pp, req)
+--- libsolv-0.7.22/src/pool.c.orig	2022-03-21 10:19:54.000000000 +0100
++++ libsolv-0.7.22/src/pool.c	2022-05-13 11:48:11.742261108 +0200
+@@ -1413,7 +1413,7 @@
+ 	  queue_push(&plist, p);
+ 	}
+       /* make our system solvable provide all unknown rpmlib() stuff */
+-      if (plist.count == 0 && !strncmp(pool_id2str(pool, name), "rpmlib(", 7))
++      if (plist.count == 0 && (!strncmp(pool_id2str(pool, name), "rpmlib(", 7) || !strncmp(pool_id2str(pool, name), "uname(", 6) || !strncmp(pool_id2str(pool, name), "cpuinfo(", 8)))
+ 	queue_push(&plist, SYSTEMSOLVABLE);
+     }
+   /* add providers to whatprovides */
