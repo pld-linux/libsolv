@@ -9,15 +9,14 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.7.23
+Version:	0.7.24
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/tags
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	ac2c1ee940f29275f30d4d1277666fdf
+# Source0-md5:	191255dbe80964d4977f1127b492d924
 Patch0:		ruby.patch
-Patch1:		%{name}-python.patch
 Patch2:		%{name}-rpm5.patch
 Patch3:		uname-cpuinfo-deps.patch
 URL:		https://github.com/openSUSE/libsolv
@@ -179,7 +178,6 @@ Wiązania języka Tcl do bibliotek libsolv.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 %{?with_rpm5:%patch2 -p1}
 %patch3 -p1
 
