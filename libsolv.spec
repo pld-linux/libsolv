@@ -27,6 +27,7 @@ BuildRequires:	expat-devel
 BuildRequires:	perl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2
+BuildRequires:	python-modules >= 2
 %{?with_python3:BuildRequires:	python3-devel >= 1:3}
 BuildRequires:	rpm-devel
 BuildRequires:	rpm-perlprov
