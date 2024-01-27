@@ -9,13 +9,13 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.7.27
+Version:	0.7.28
 Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/tags
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2fbd0b50140f483e6061ae22cc841f7b
+# Source0-md5:	c06aeec19aba5111238a35b2223eb0fd
 Patch0:		ruby.patch
 Patch2:		%{name}-rpm5.patch
 Patch3:		uname-cpuinfo-deps.patch
