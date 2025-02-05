@@ -10,7 +10,7 @@ Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
 Version:	0.7.30
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/tags
@@ -178,9 +178,9 @@ Wiązania języka Tcl do bibliotek libsolv.
 
 %prep
 %setup -q
-%patch0 -p1
-%{?with_rpm5:%patch2 -p1}
-%patch3 -p1
+%patch -P 0 -p1
+%{?with_rpm5:%patch -P 2 -p1}
+%patch -P 3 -p1
 
 # use system one
 %{__rm} cmake/modules/FindRuby.cmake
