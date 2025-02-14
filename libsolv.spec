@@ -9,13 +9,13 @@
 Summary:	Package dependency solver
 Summary(pl.UTF-8):	Biblioteka do rozwiązywania zależności pakietów
 Name:		libsolv
-Version:	0.7.30
-Release:	3
+Version:	0.7.31
+Release:	1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/openSUSE/libsolv/tags
 Source0:	https://github.com/openSUSE/libsolv/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	bd0bc4879dd6ee7292eead2652364aa3
+# Source0-md5:	a451a3e8e529b8ab0dc46ae3c3d0058f
 Patch0:		ruby.patch
 Patch2:		%{name}-rpm5.patch
 Patch3:		uname-cpuinfo-deps.patch
@@ -188,10 +188,7 @@ Wiązania języka Tcl do bibliotek libsolv.
 %build
 %define common_opts \\\
 	-DENABLE_APPDATA=ON \\\
-	-DENABLE_BZIP2_COMPRESSION=ON \\\
 	-DENABLE_COMPLEX_DEPS=ON \\\
-	-DENABLE_HELIXREPO=ON \\\
-	-DENABLE_LZMA_COMPRESSION=ON \\\
 	-DENABLE_PUBKEY=ON \\\
 	-DENABLE_RPMDB=ON \\\
 	%{?with_rpm5:-DRPM5=ON} \\\
@@ -202,9 +199,20 @@ Wiązania języka Tcl do bibliotek libsolv.
 	-DENABLE_RPMDB_BYRPMHEADER=ON \\\
 	-DENABLE_RPMMD=ON \\\
 	%{?with_static_libs:-DENABLE_STATIC=ON} \\\
+	-DENABLE_LZMA_COMPRESSION=ON \\\
+	-DENABLE_BZIP2_COMPRESSION=ON \\\
 	-DENABLE_ZCHUNK_COMPRESSION=ON \\\
 	-DENABLE_ZSTD_COMPRESSION=ON \\\
 	-DWITH_SYSTEM_ZCHUNK=ON \\\
+	-DENABLE_SUSEREPO=ON \\\
+	-DENABLE_COMPS=ON \\\
+	-DENABLE_HELIXREPO=ON \\\
+	-DENABLE_DEBIAN=ON \\\
+	-DENABLE_MDKREPO=ON \\\
+	-DENABLE_ARCHREPO=ON \\\
+	-DENABLE_CUDFREPO=ON \\\
+	-DENABLE_CONDA=ON \\\
+	-DMULTI_SEMANTICS=ON \\\
 	%{nil}
 
 install -d build %{?with_python3:build-py3}
@@ -278,23 +286,35 @@ rm -rf $RPM_BUILD_ROOT
 %files tools
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/appdata2solv
+%attr(755,root,root) %{_bindir}/archpkgs2solv
+%attr(755,root,root) %{_bindir}/archrepo2solv
+%attr(755,root,root) %{_bindir}/comps2solv
+%attr(755,root,root) %{_bindir}/conda2solv
+%attr(755,root,root) %{_bindir}/deb2solv
 %attr(755,root,root) %{_bindir}/deltainfoxml2solv
 %attr(755,root,root) %{_bindir}/dumpsolv
 %attr(755,root,root) %{_bindir}/helix2solv
 %attr(755,root,root) %{_bindir}/installcheck
+%attr(755,root,root) %{_bindir}/mdk2solv
 %attr(755,root,root) %{_bindir}/mergesolv
 %attr(755,root,root) %{_bindir}/repo2solv
 %attr(755,root,root) %{_bindir}/repomdxml2solv
 %attr(755,root,root) %{_bindir}/rpmdb2solv
 %attr(755,root,root) %{_bindir}/rpmmd2solv
 %attr(755,root,root) %{_bindir}/rpms2solv
+%attr(755,root,root) %{_bindir}/susetags2solv
 %attr(755,root,root) %{_bindir}/testsolv
 %attr(755,root,root) %{_bindir}/updateinfoxml2solv
 %{_mandir}/man1/appdata2solv.1*
+%{_mandir}/man1/archpkgs2solv.1*
+%{_mandir}/man1/archrepo2solv.1*
+%{_mandir}/man1/comps2solv.1*
+%{_mandir}/man1/deb2solv.1*
 %{_mandir}/man1/deltainfoxml2solv.1*
 %{_mandir}/man1/dumpsolv.1*
 %{_mandir}/man1/helix2solv.1*
 %{_mandir}/man1/installcheck.1*
+%{_mandir}/man1/mdk2solv.1*
 %{_mandir}/man1/mergesolv.1*
 %{_mandir}/man1/repo2solv.1*
 %{_mandir}/man1/repomdxml2solv.1*
@@ -302,6 +322,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/rpmmd2solv.1*
 %{_mandir}/man1/rpms2solv.1*
 %{_mandir}/man1/solv.1*
+%{_mandir}/man1/susetags2solv.1*
 %{_mandir}/man1/testsolv.1*
 %{_mandir}/man1/updateinfoxml2solv.1*
 
